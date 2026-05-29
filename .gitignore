@@ -10,6 +10,7 @@ token.md
 *.swp
 *.swo
 *~
+*.d
 
 # IDE
 .vscode/
@@ -20,4 +21,5 @@ CMakeLists.txt
 fix.sh
 build/
 bin/*
+obj/
 

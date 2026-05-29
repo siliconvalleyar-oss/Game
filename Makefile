@@ -6,7 +6,7 @@ SRCDIR = src
 LIBDIR = lib
 OBJDIR = obj
 BINDIR = bin
-TARGET = $(BINDIR)/retroman
+TARGET = $(BINDIR)/GameApp
 
 SRCS = $(wildcard $(SRCDIR)/*.cpp)
 SRCS += $(wildcard $(SRCDIR)/cmp/*.cpp)
