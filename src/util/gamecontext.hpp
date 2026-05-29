@@ -1,6 +1,6 @@
 #pragma once
 #include "../cmp/entity.hpp"
-#include "../cmp/physics.hpp"
+#include "typealiases.hpp"
 
 namespace ECS {
 

@@ -12,12 +12,16 @@ bool CollisionSystem_t::update(GameContext_t& g) const {
             auto& a = entities[i];
             auto& b = entities[j];
             
-            if (a.x < b.x + b.w &&
-                a.x + a.w > b.x &&
-                a.y < b.y + b.h &&
-                a.y + a.h > b.y) {
-                std::swap(a.vx, b.vx);
-                std::swap(a.vy, b.vy);
+            if (a.phy && b.phy) {
+                if (a.phy->x < b.phy->x + b.w &&
+                    a.phy->x + a.w > b.phy->x &&
+                    a.phy->y < b.phy->y + b.h &&
+                    a.phy->y + a.h > b.phy->y) {
+                    std::swap(a.vx, b.vx);
+                    std::swap(a.vy, b.vy);
+                    std::swap(a.phy->vx, b.phy->vx);
+                    std::swap(a.phy->vy, b.phy->vy);
+                }
             }
         }
     }

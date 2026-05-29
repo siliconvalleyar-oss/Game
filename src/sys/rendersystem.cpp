@@ -24,11 +24,11 @@ void RenderSystem_t::drawAllEntities(const Vect_t<Entity_t>& entities) const {
     const auto screenWidth = m_w;
     
     for (const auto& entity : entities) {
-        if (entity.sprite.empty()) continue;
+        if (entity.sprite.empty() || entity.phy == nullptr) continue;
         
-        uint32_t* dest = screen + entity.y * screenWidth + entity.x;
-        for (uint32_t y = 0; y < entity.h && entity.y + y < m_h; ++y) {
-            for (uint32_t x = 0; x < entity.w && entity.x + x < m_w; ++x) {
+        uint32_t* dest = screen + entity.phy->y * screenWidth + entity.phy->x;
+        for (uint32_t y = 0; y < entity.h && entity.phy->y + y < m_h; ++y) {
+            for (uint32_t x = 0; x < entity.w && entity.phy->x + x < m_w; ++x) {
                 size_t idx = y * entity.w + x;
                 if (idx < entity.sprite.size()) {
                     dest[x] = entity.sprite[idx];

@@ -1,18 +1,12 @@
 #pragma once
 
-namespace ECS{
-struct  GameContext_t;
+namespace ECS {
 
-class CollisionSystem_t
-{
-private:
-     
-public:
-    explicit CollisionSystem_t()=default;
-    bool update (GameContext_t&)const;
+struct GameContext_t;
+
+struct CollisionSystem_t {
+    explicit CollisionSystem_t() = default;
+    bool update(GameContext_t&) const;
 };
-
-
-
 
 }

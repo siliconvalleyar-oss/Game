@@ -31,7 +31,6 @@ $(TARGET): $(OBJS)
 	$(CXX) $^ -o $@ $(LDFLAGS)
 	@echo "✅ Compilación exitosa: $(TARGET)"
 
-# Reglas para compilar
 $(OBJDIR)/main.o: $(SRCDIR)/main.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 

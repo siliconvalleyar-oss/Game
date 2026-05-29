@@ -4,26 +4,27 @@
 namespace ECS {
 
 bool PhysicsSystem_t::update(GameContext_t& g) const {
-    auto& entities = g.getEntities();
-    for (auto& entity : entities) {
-        entity.x += entity.vx;
-        entity.y += entity.vy;
+    auto& physicsComponents = g.getPhysicsComponent();
+    for (auto& phy : physicsComponents) {
+        phy.x += phy.vx;
+        phy.y += phy.vy;
         
-        if (entity.x + entity.w >= 640) {
-            entity.x = 640 - entity.w;
-            entity.vx = -entity.vx;
+        // Colisiones con bordes
+        if (phy.x >= 640 - 16) {
+            phy.x = 640 - 16;
+            phy.vx = -phy.vx;
         }
-        if (entity.y + entity.h >= 360) {
-            entity.y = 360 - entity.h;
-            entity.vy = -entity.vy;
+        if (phy.y >= 360 - 16) {
+            phy.y = 360 - 16;
+            phy.vy = -phy.vy;
         }
-        if (entity.x <= 0) {
-            entity.x = 0;
-            entity.vx = -entity.vx;
+        if (phy.x <= 0) {
+            phy.x = 0;
+            phy.vx = -phy.vx;
         }
-        if (entity.y <= 0) {
-            entity.y = 0;
-            entity.vy = -entity.vy;
+        if (phy.y <= 0) {
+            phy.y = 0;
+            phy.vy = -phy.vy;
         }
     }
     return true;

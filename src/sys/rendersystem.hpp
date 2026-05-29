@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <memory>
+#include <algorithm>
 #include "../util/typealiases.hpp"
 #include "../cmp/entity.hpp"
 
