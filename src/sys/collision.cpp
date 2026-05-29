@@ -2,29 +2,33 @@
 #include <algorithm>
 #include "collision.hpp"
 #include "../util/gamecontext.hpp"
+#include "../cmp/entity.hpp"
 
 namespace ECS {
 
 bool CollisionSystem_t::update(GameContext_t& g) const {
     auto& entities = g.getEntities();
-    for (size_t i = 0; i < entities.size(); ++i) {
-        for (size_t j = i + 1; j < entities.size(); ++j) {
-            auto& a = entities[i];
-            auto& b = entities[j];
-            
-            if (a.phy && b.phy) {
-                if (a.phy->x < b.phy->x + b.w &&
-                    a.phy->x + a.w > b.phy->x &&
-                    a.phy->y < b.phy->y + b.h &&
-                    a.phy->y + a.h > b.phy->y) {
-                    std::swap(a.vx, b.vx);
-                    std::swap(a.vy, b.vy);
-                    std::swap(a.phy->vx, b.phy->vx);
-                    std::swap(a.phy->vy, b.phy->vy);
-                }
+    Entity_t* player = g.getPlayer();
+    
+    if (!player) return true;
+    
+    for (auto& entity : entities) {
+        if (!entity.active) continue;
+        
+        // Colisión jugador vs enemigo
+        if (&entity != player && entity.type != EntityType::PLAYER && player->active) {
+            if (player->x < entity.x + entity.w &&
+                player->x + player->w > entity.x &&
+                player->y < entity.y + entity.h &&
+                player->y + player->h > entity.y) {
+                
+                // Destruir enemigo al colisionar
+                entity.active = false;
+                std::cout << "💥 Enemigo destruido!" << std::endl;
             }
         }
     }
+    
     return true;
 }
 

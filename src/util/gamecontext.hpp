@@ -8,8 +8,8 @@ struct GameContext_t {
     virtual ~GameContext_t() = default;
     virtual Vect_t<Entity_t>& getEntities() = 0;
     virtual const Vect_t<Entity_t>& getEntities() const = 0;
-    virtual std::vector<PhysicsComponent_t>& getPhysicsComponent() = 0;
-    virtual const std::vector<PhysicsComponent_t>& getPhysicsComponent() const = 0;
+    virtual Entity_t* getPlayer() = 0;
+    virtual void setPlayer(Entity_t* player) = 0;
 };
 
 }

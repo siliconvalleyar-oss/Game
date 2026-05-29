@@ -6,7 +6,7 @@ SRCDIR = src
 LIBDIR = lib
 OBJDIR = obj
 BINDIR = bin
-TARGET = $(BINDIR)/GameApp
+TARGET = $(BINDIR)/retroman
 
 SRCS = $(wildcard $(SRCDIR)/*.cpp)
 SRCS += $(wildcard $(SRCDIR)/cmp/*.cpp)
@@ -29,42 +29,28 @@ dirs:
 
 $(TARGET): $(OBJS)
 	$(CXX) $^ -o $@ $(LDFLAGS)
-	@echo "✅ Compilación exitosa: $(TARGET)"
+	@echo "✅ ¡Compilación exitosa!"
+	@echo "🎮 Para ejecutar: make run"
 
-$(OBJDIR)/main.o: $(SRCDIR)/main.cpp
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-$(OBJDIR)/entity.o: $(SRCDIR)/cmp/entity.cpp
+$(OBJDIR)/%.o: $(SRCDIR)/cmp/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-$(OBJDIR)/entitymanager.o: $(SRCDIR)/man/entitymanager.cpp
+$(OBJDIR)/%.o: $(SRCDIR)/man/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-$(OBJDIR)/collision.o: $(SRCDIR)/sys/collision.cpp
+$(OBJDIR)/%.o: $(SRCDIR)/sys/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-$(OBJDIR)/physics.o: $(SRCDIR)/sys/physics.cpp
+$(OBJDIR)/%.o: $(SRCDIR)/util/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-$(OBJDIR)/rendersystem.o: $(SRCDIR)/sys/rendersystem.cpp
+$(OBJDIR)/%.o: $(LIBDIR)/picoPNG/src/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-$(OBJDIR)/picopng.o: $(LIBDIR)/picoPNG/src/picopng.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-
-$(OBJDIR)/convert.o: $(LIBDIR)/tinyPTC/src/convert.c
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-
-$(OBJDIR)/xdbe.o: $(LIBDIR)/tinyPTC/src/xdbe.c
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-
-$(OBJDIR)/xlib.o: $(LIBDIR)/tinyPTC/src/xlib.c
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-
-$(OBJDIR)/xshm.o: $(LIBDIR)/tinyPTC/src/xshm.c
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-
-$(OBJDIR)/xvshm.o: $(LIBDIR)/tinyPTC/src/xvshm.c
+$(OBJDIR)/%.o: $(LIBDIR)/tinyPTC/src/%.c
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 -include $(DEPS)
