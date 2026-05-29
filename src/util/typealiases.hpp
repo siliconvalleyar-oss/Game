@@ -1,6 +1,5 @@
 #pragma once
 #include <vector>
-#include <iostream>
 
 namespace ECS {
     template<typename T>

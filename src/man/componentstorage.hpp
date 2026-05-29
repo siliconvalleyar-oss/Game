@@ -11,10 +11,6 @@ struct ComponentStorage_t {
         physicsComponents.emplace_back();
         return physicsComponents.back();
     }
-    
-    std::vector<PhysicsComponent_t>& getPhysicsComponent() { 
-        return physicsComponents; 
-    }
 };
 
 }

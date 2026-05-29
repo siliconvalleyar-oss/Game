@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <memory>
-#include <algorithm>
+#include <string>
 #include "../util/typealiases.hpp"
 #include "../cmp/entity.hpp"
 
@@ -18,6 +18,7 @@ struct RenderSystem_t {
 private:
     const uint32_t m_w { 0 }, m_h { 0 };
     mutable std::unique_ptr<uint32_t[]> m_framebuffer{ nullptr };
+    uint32_t m_bgColor { 0xFF0a0a2a };
 };
 
 }

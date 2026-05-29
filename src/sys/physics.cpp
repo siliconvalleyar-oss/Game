@@ -1,6 +1,5 @@
 #include "physics.hpp"
 #include "../util/gamecontext.hpp"
-#include "../man/entitymanager.hpp"
 
 namespace ECS {
 
@@ -15,22 +14,25 @@ bool PhysicsSystem_t::update(GameContext_t& g) const {
         entity.x += entity.vx;
         entity.y += entity.vy;
         
-        // Limitar bordes de pantalla
         if (entity.x + entity.w >= SCREEN_W) {
             entity.x = SCREEN_W - entity.w;
-            entity.vx = -entity.vx;
+            if (entity.type != EntityType::PLAYER) entity.vx = -entity.vx;
+            else entity.vx = 0;
         }
         if (entity.y + entity.h >= SCREEN_H) {
             entity.y = SCREEN_H - entity.h;
-            entity.vy = -entity.vy;
+            if (entity.type != EntityType::PLAYER) entity.vy = -entity.vy;
+            else entity.vy = 0;
         }
         if (entity.x <= 0) {
             entity.x = 0;
-            entity.vx = -entity.vx;
+            if (entity.type != EntityType::PLAYER) entity.vx = -entity.vx;
+            else entity.vx = 0;
         }
         if (entity.y <= 0) {
             entity.y = 0;
-            entity.vy = -entity.vy;
+            if (entity.type != EntityType::PLAYER) entity.vy = -entity.vy;
+            else entity.vy = 0;
         }
     }
     return true;

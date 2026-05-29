@@ -10,6 +10,8 @@ struct GameContext_t {
     virtual const Vect_t<Entity_t>& getEntities() const = 0;
     virtual Entity_t* getPlayer() = 0;
     virtual void setPlayer(Entity_t* player) = 0;
+    virtual void addScore(int points) = 0;
+    virtual int getScore() const = 0;
 };
 
 }

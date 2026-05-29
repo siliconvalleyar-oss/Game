@@ -1,2 +1,4 @@
 #include "input.hpp"
-namespace ECS {}
+namespace ECS {
+// Implementación vacía
+}

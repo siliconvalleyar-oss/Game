@@ -1,40 +1,47 @@
 #pragma once
 #include <X11/Xlib.h>
 #include <X11/keysym.h>
+#include <iostream>
 #include "../util/gamecontext.hpp"
 
 namespace ECS {
 
 struct PlayerController_t {
     bool left { false }, right { false }, up { false }, down { false };
+    Display* display { nullptr };
+    
+    PlayerController_t() {
+        display = XOpenDisplay(nullptr);
+    }
+    
+    ~PlayerController_t() {
+        if (display) XCloseDisplay(display);
+    }
     
     void update(GameContext_t& g) {
         Entity_t* player = g.getPlayer();
-        if (!player) return;
+        if (!player || !player->active) return;
         
-        // Velocidad del jugador
-        const int SPEED = 5;
+        const float SPEED = 4.0f;
         
-        // Obtener estado del teclado
-        Display* display = XOpenDisplay(nullptr);
-        if (display) {
-            char keys[32];
-            XQueryKeymap(display, keys);
-            
-            auto isKeyPressed = [&](KeySym ks) -> bool {
-                KeyCode kc = XKeysymToKeycode(display, ks);
-                return (kc < 256) && (keys[kc >> 3] & (1 << (kc & 7)));
-            };
-            
-            left = isKeyPressed(XK_Left);
-            right = isKeyPressed(XK_Right);
-            up = isKeyPressed(XK_Up);
-            down = isKeyPressed(XK_Down);
-            
-            XCloseDisplay(display);
+        if (!display) {
+            display = XOpenDisplay(nullptr);
+            if (!display) return;
         }
         
-        // Aplicar movimiento
+        char keys[32];
+        XQueryKeymap(display, keys);
+        
+        auto isKeyPressed = [&](KeySym ks) -> bool {
+            KeyCode kc = XKeysymToKeycode(display, ks);
+            return (keys[kc >> 3] & (1 << (kc & 7))) != 0;
+        };
+        
+        left = isKeyPressed(XK_Left);
+        right = isKeyPressed(XK_Right);
+        up = isKeyPressed(XK_Up);
+        down = isKeyPressed(XK_Down);
+        
         player->vx = 0;
         player->vy = 0;
         if (left) player->vx = -SPEED;

@@ -16,9 +16,10 @@ constexpr uint32_t kSCRWIDTH { 640 };
 constexpr uint32_t kSCRHEIGHT { 360 };
 
 int main(void) {
-    std::cout << "🎮 RetroMan - Juego con Jugador y Enemigos" << std::endl;
-    std::cout << "📖 Controles: Flechas para mover al jugador (cuadrado verde)" << std::endl;
-    std::cout << "💥 Colisiona con los enemigos para destruirlos!" << std::endl;
+    std::cout << "🎮 RetroMan - Juego con Assets" << std::endl;
+    std::cout << "📖 Controles: Flechas para mover al jugador" << std::endl;
+    std::cout << "💥 Colisiona con enemigos para destruirlos y ganar puntos!" << std::endl;
+    std::cout << "================================================" << std::endl;
     
     try {
         ECS::EntityManager_t entityMan;
@@ -30,22 +31,16 @@ int main(void) {
         int frameCount = 0;
         
         while (render.update(entityMan)) {
-            // Control del jugador
             controller.update(entityMan);
-            
-            // Actualizar físicas
             physics.update(entityMan);
-            
-            // Actualizar colisiones
             collision.update(entityMan);
             
-            // Limpiar enemigos destruidos cada cierto tiempo
             frameCount++;
-            if (frameCount % 60 == 0) {
+            if (frameCount % 120 == 0) {
                 entityMan.removeInactive();
             }
             
-            usleep(16000); // ~60 FPS
+            usleep(16000);
         }
     } catch (const std::exception& e) {
         std::cout << "❌ Error: " << e.what() << std::endl;

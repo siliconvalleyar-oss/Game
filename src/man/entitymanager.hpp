@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <random>
+#include <iostream>
 #include "componentstorage.hpp"
 #include "../util/typealiases.hpp"
 #include "../util/gamecontext.hpp"
@@ -16,62 +17,50 @@ namespace ECS {
 struct EntityManager_t : public GameContext_t {
     Vect_t<Entity_t> m_Entity{};
     Entity_t* m_player { nullptr };
-    ComponentStorage_t m_components;
+    int m_score { 0 };
     std::mt19937 rng{ std::random_device{}() };
     std::uniform_int_distribution<int> distX{ 50, 550 };
-    std::uniform_int_distribution<int> distY{ 50, 300 };
+    std::uniform_int_distribution<int> distY{ 50, 280 };
     
     explicit EntityManager_t() {
-        m_Entity.reserve(1000);
+        m_Entity.reserve(500);
         createPlayer();
-        createEnemies(8); // 8 enemigos
+        loadEnemiesFromAssets();
     }
     
     void createPlayer() {
-        auto& player = m_Entity.emplace_back(16, 16, 0xFF00FF00, EntityType::PLAYER);
-        player.x = 320;
-        player.y = 180;
+        auto& player = m_Entity.emplace_back("assets/ninja_idle.png", EntityType::PLAYER);
+        player.x = 320 - player.w / 2;
+        player.y = 180 - player.h / 2;
         player.vx = 0;
         player.vy = 0;
         player.active = true;
+        player.name = "Player";
         m_player = &player;
+        std::cout << "✅ Jugador creado" << std::endl;
     }
     
-    void createEnemies(int count) {
-        std::uniform_int_distribution<int> distColor(0, 3);
+    void loadEnemiesFromAssets() {
+        std::vector<std::string> enemyFiles = {
+            "assets/enemy.png", "assets/hongo.png", "assets/bom.png",
+            "assets/pacman.png", "assets/mario3.png"
+        };
         
-        for (int i = 0; i < count; i++) {
-            EntityType type;
-            uint32_t color;
-            int colorType = distColor(rng);
-            
-            switch(colorType) {
-                case 0: type = EntityType::ENEMY_RED; color = 0xFFFF0000; break;
-                case 1: type = EntityType::ENEMY_BLUE; color = 0xFF0000FF; break;
-                case 2: type = EntityType::ENEMY_GREEN; color = 0xFF00FF00; break;
-                default: type = EntityType::ENEMY_YELLOW; color = 0xFFFFFF00; break;
+        for (const auto& file : enemyFiles) {
+            if (FILE *f = fopen(file.c_str(), "r")) {
+                fclose(f);
+                auto& enemy = m_Entity.emplace_back(file, EntityType::ENEMY);
+                enemy.x = distX(rng);
+                enemy.y = distY(rng);
+                enemy.vx = (rand() % 4) + 1;
+                enemy.vy = (rand() % 4) + 1;
+                if (rand() % 2) enemy.vx = -enemy.vx;
+                if (rand() % 2) enemy.vy = -enemy.vy;
+                enemy.active = true;
+                enemy.name = file;
             }
-            
-            auto& enemy = m_Entity.emplace_back(16, 16, color, type);
-            enemy.x = distX(rng);
-            enemy.y = distY(rng);
-            enemy.vx = (rand() % 3) + 1;
-            enemy.vy = (rand() % 3) + 1;
-            if (rand() % 2) enemy.vx = -enemy.vx;
-            if (rand() % 2) enemy.vy = -enemy.vy;
-            enemy.active = true;
         }
-    }
-    
-    void createEnemyAt(int x, int y, EntityType type, uint32_t color) {
-        auto& enemy = m_Entity.emplace_back(16, 16, color, type);
-        enemy.x = x;
-        enemy.y = y;
-        enemy.vx = (rand() % 5) + 1;
-        enemy.vy = (rand() % 5) + 1;
-        if (rand() % 2) enemy.vx = -enemy.vx;
-        if (rand() % 2) enemy.vy = -enemy.vy;
-        enemy.active = true;
+        std::cout << "✅ Enemigos cargados" << std::endl;
     }
     
     const Vect_t<Entity_t>& getEntities() const override { return m_Entity; }
@@ -79,6 +68,9 @@ struct EntityManager_t : public GameContext_t {
     
     Entity_t* getPlayer() override { return m_player; }
     void setPlayer(Entity_t* player) override { m_player = player; }
+    
+    void addScore(int points) override { m_score += points; std::cout << "🏆 Puntuación: " << m_score << std::endl; }
+    int getScore() const override { return m_score; }
     
     void removeInactive() {
         m_Entity.erase(

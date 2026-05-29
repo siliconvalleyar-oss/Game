@@ -32,25 +32,44 @@ $(TARGET): $(OBJS)
 	@echo "✅ ¡Compilación exitosa!"
 	@echo "🎮 Para ejecutar: make run"
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
+# Reglas para compilar archivos
+$(OBJDIR)/main.o: $(SRCDIR)/main.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-$(OBJDIR)/%.o: $(SRCDIR)/cmp/%.cpp
+$(OBJDIR)/entity.o: $(SRCDIR)/cmp/entity.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-$(OBJDIR)/%.o: $(SRCDIR)/man/%.cpp
+$(OBJDIR)/entitymanager.o: $(SRCDIR)/man/entitymanager.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-$(OBJDIR)/%.o: $(SRCDIR)/sys/%.cpp
+$(OBJDIR)/collision.o: $(SRCDIR)/sys/collision.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-$(OBJDIR)/%.o: $(SRCDIR)/util/%.cpp
+$(OBJDIR)/physics.o: $(SRCDIR)/sys/physics.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-$(OBJDIR)/%.o: $(LIBDIR)/picoPNG/src/%.cpp
+$(OBJDIR)/rendersystem.o: $(SRCDIR)/sys/rendersystem.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-$(OBJDIR)/%.o: $(LIBDIR)/tinyPTC/src/%.c
+$(OBJDIR)/input.o: $(SRCDIR)/sys/input.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(OBJDIR)/picopng.o: $(LIBDIR)/picoPNG/src/picopng.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(OBJDIR)/convert.o: $(LIBDIR)/tinyPTC/src/convert.c
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(OBJDIR)/xdbe.o: $(LIBDIR)/tinyPTC/src/xdbe.c
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(OBJDIR)/xlib.o: $(LIBDIR)/tinyPTC/src/xlib.c
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(OBJDIR)/xshm.o: $(LIBDIR)/tinyPTC/src/xshm.c
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(OBJDIR)/xvshm.o: $(LIBDIR)/tinyPTC/src/xvshm.c
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 -include $(DEPS)
