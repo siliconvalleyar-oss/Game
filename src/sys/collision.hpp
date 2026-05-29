@@ -8,8 +8,7 @@ class CollisionSystem_t
 private:
      
 public:
-    CollisionSystem_t();
-    ~CollisionSystem_t();
+    explicit CollisionSystem_t()=default;
     bool update (GameContext_t&)const;
 };
 

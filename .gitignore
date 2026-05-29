@@ -1,0 +1,23 @@
+token.md
+# Objetos y ejecutables
+*.o
+*.exe
+*.out
+*.a
+*.so
+
+# Archivos temporales
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/
+.idea/
+*.user
+
+CMakeLists.txt
+fix.sh
+build/
+bin/*
+

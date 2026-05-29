@@ -1,5 +1,4 @@
 extern "C" {
-///    #include <tinyPTC/src/tinyptc.h>
     #include "../lib/tinyPTC/src/tinyptc.h"
   }
 #include <cstdint>
@@ -32,8 +31,6 @@ int main(void){
   catch(...){
     std::cout<< "break program"<<std::endl;
   }
-
-
   return 0;
 }
 

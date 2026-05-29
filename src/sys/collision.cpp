@@ -1,28 +1,27 @@
 #include <iostream>
+#include <algorithm>
 #include "collision.hpp"
 #include "../util/gamecontext.hpp"
-//#include "../cmp/entity.hpp"
 
-namespace ECS{
+namespace ECS {
 
-CollisionSystem_t::CollisionSystem_t( )
-{
-}
-
-CollisionSystem_t::~CollisionSystem_t()
-{
-}
-
-
-
-    bool CollisionSystem_t::update (GameContext_t& g)const{
-        for(auto& e :g.getEntities()){
-         
-             if(e.x > 640 || e.x + e.w > 640 ){ e.x -=e.vx ; e.vx -=e.vx; }
-             if(e.y > 360 || e.y + e.h > 360 ){ e.y -=e.vy ; e.vy -=e.vy; }
+bool CollisionSystem_t::update(GameContext_t& g) const {
+    auto& entities = g.getEntities();
+    for (size_t i = 0; i < entities.size(); ++i) {
+        for (size_t j = i + 1; j < entities.size(); ++j) {
+            auto& a = entities[i];
+            auto& b = entities[j];
             
+            if (a.x < b.x + b.w &&
+                a.x + a.w > b.x &&
+                a.y < b.y + b.h &&
+                a.y + a.h > b.y) {
+                std::swap(a.vx, b.vx);
+                std::swap(a.vy, b.vy);
+            }
         }
-        return true;
     }
+    return true;
+}
 
 }

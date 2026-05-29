@@ -1,7 +1,5 @@
-
 #include "entity.hpp"
-#include <iostream>
 
 namespace ECS {
-
+// Implementación vacía - todo está en el header
 }

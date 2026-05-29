@@ -1,3 +1,0 @@
-/media/compaq/FILES/development/sourceCpp/gameCpp/application_v1.23/bin/CMakeFiles/rebuild_cache.dir
-/media/compaq/FILES/development/sourceCpp/gameCpp/application_v1.23/bin/CMakeFiles/edit_cache.dir
-/media/compaq/FILES/development/sourceCpp/gameCpp/application_v1.23/bin/CMakeFiles/app.dir
