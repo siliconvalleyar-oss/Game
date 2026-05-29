@@ -1,0 +1,3 @@
+/home/optimus/Documentos/freebuff/retroman/old_version_app_game/application_v1.23/build/CMakeFiles/app.dir
+/home/optimus/Documentos/freebuff/retroman/old_version_app_game/application_v1.23/build/CMakeFiles/edit_cache.dir
+/home/optimus/Documentos/freebuff/retroman/old_version_app_game/application_v1.23/build/CMakeFiles/rebuild_cache.dir
